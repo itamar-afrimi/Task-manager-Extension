@@ -1,9 +1,9 @@
-/* Base styling */
+/* Apply Google Font */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f0f4f8;  /* Light background */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,60 +13,69 @@ body {
 
 /* Container for task manager */
 #task-manager {
-    width: 300px;          /* Fixed width */
-    height: 400px;         /* Fixed height */
+    width: 320px;            /* Fixed width */
+    height: 450px;           /* Fixed height */
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);  /* Soft shadow for depth */
     display: flex;
     flex-direction: column;
     gap: 20px;
-    overflow-y: auto;      /* Make the content scrollable if needed */
+    overflow-y: auto;
 }
 
 /* Title styling */
 h2 {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
     text-align: center;
     color: #333;
 }
 
-/* Styling for the form */
+/* Form Styling */
 #task-form {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
-/* Input field */
+/* Input field styling */
 #task-input {
     flex: 1;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-size: 14px;
+    transition: border 0.3s ease;
+}
+
+#task-input:focus {
+    border-color: #4CAF50;  /* Highlight input field when focused */
+    outline: none;
 }
 
 /* Button styling */
 button {
     background-color: #4CAF50;
     color: white;
-    padding: 8px 12px;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #45a049;
 }
 
-/* Task list styling */
+/* Task List Styling */
 #task-list {
     list-style: none;
     padding: 0;
-    max-height: 250px; /* Max height for the task list */
-    overflow-y: auto;  /* Scrollable task list */
+    max-height: 250px;  /* Max height for the task list */
+    overflow-y: auto;
 }
 
 /* Task item styling */
@@ -74,11 +83,17 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
+    padding: 12px;
     background-color: #fafafa;
-    border-radius: 5px;
-    margin-bottom: 8px;
+    border-radius: 8px;
+    margin-bottom: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.task-item:hover {
+    background-color: #f1f1f1; /* Slightly darker background when hovering */
+    transform: scale(1.02);     /* Slight scaling effect for hover */
 }
 
 .task-item label {
@@ -88,8 +103,8 @@ button:hover {
 }
 
 .task-item .checkmark {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     border: 2px solid #4CAF50;
     display: flex;
@@ -113,4 +128,10 @@ button:hover {
     border: none;
     color: #999;
     cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.task-item button:hover {
+    color: #e53935;  /* Red color for delete button on hover */
 }
