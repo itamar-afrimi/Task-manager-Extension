@@ -1,12 +1,12 @@
 chrome.commands.onCommand.addListener((command) => {
     if (command === "_execute_action") {
         chrome.windows.create({
-            url: "popup.html", // Your sidebar content
-            type: "normal",     // Use 'normal' instead of 'popup' to allow more flexibility
-            width: window.innerWidth,         // Adjust the width to fit your needs
-            height: window.innerHeight, // Full height of the screen
-            left: 0,            // Place it on the left side
-            top: 0              // Ensure it's at the top of the screen
+            url: "popup.html",  // The URL of your popup
+            type: "popup",  // Ensure it's a popup
+            width: 400,  // Set a reasonable width
+            height: 600,  // Set a reasonable height
+            left: 100,  // Position it from the left side of the screen
+            top: 100,  // Position it from the top
         });
     }
 });

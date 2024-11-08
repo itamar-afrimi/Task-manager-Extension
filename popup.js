@@ -26,60 +26,58 @@ function loadTasks() {
 }
 
 // Add a task to the UI
-function addTask(task) {
+function addTask(taskText, isDone) {
     const li = document.createElement('li');
     li.className = 'task-item';
 
     const label = document.createElement('label');
     const checkmark = document.createElement('span');
     checkmark.className = 'checkmark';
-    if (task.done) checkmark.classList.add('checked');
+    if (isDone) checkmark.classList.add('checked');
     checkmark.addEventListener('click', function() {
         checkmark.classList.toggle('checked');
-        task.done = checkmark.classList.contains('checked');
-        updateTask(task); // Update the task status in storage
+        li.classList.toggle('completed');
+        updateTask(taskText, checkmark.classList.contains('checked'));
     });
 
     const text = document.createElement('span');
-    text.textContent = task.text;
+    text.textContent = taskText;
+
+    const taskLinks = document.createElement('div');
+    taskLinks.className = 'task-links';
 
     const linkInput = document.createElement('input');
     linkInput.type = 'url';
-    linkInput.placeholder = 'Add a related link...';
-    const linkButton = document.createElement('button');
-    linkButton.textContent = 'Add Link';
-    linkButton.addEventListener('click', function() {
+    linkInput.placeholder = 'Add link...';
+    taskLinks.appendChild(linkInput);
+
+    const saveLinkButton = document.createElement('button');
+    saveLinkButton.textContent = 'Save Link';
+    saveLinkButton.addEventListener('click', function() {
         const link = linkInput.value.trim();
         if (link) {
-            task.links.push(link);
-            addLinkToTask(li, link, task.links.length - 1); // Add the link to the task
-            saveTask(task); // Save updated task to storage
-            linkInput.value = ''; // Clear the link input
+            const linkElement = document.createElement('a');
+            linkElement.href = link;
+            linkElement.target = '_blank';
+            linkElement.textContent = 'Read more';
+            taskLinks.appendChild(linkElement);
+            linkInput.value = '';  // Clear input field
         }
     });
+    taskLinks.appendChild(saveLinkButton);
 
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete task';
+    deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
     deleteButton.addEventListener('click', function() {
-        removeTask(task); // Remove task from storage
+        removeTask(taskText);
         li.remove();
     });
 
     label.appendChild(checkmark);
     label.appendChild(text);
     li.appendChild(label);
-    li.appendChild(linkInput);
-    li.appendChild(linkButton);
+    li.appendChild(taskLinks);  // Append the links section
     li.appendChild(deleteButton);
-
-    const linksContainer = document.createElement('div');
-    linksContainer.className = 'links';
-    li.appendChild(linksContainer);
-
-    task.links.forEach((link, index) => {
-        addLinkToTask(linksContainer, link, index);
-    });
-
     taskList.appendChild(li);
 }
 
