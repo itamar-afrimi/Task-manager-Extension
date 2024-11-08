@@ -59,7 +59,7 @@ function addTask(task) {
     });
 
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'delete task';
+    deleteButton.textContent = 'Delete task';
     deleteButton.addEventListener('click', function() {
         removeTask(task); // Remove task from storage
         li.remove();
