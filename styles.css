@@ -1,17 +1,51 @@
+/* General styling for the popup */
 body {
-    font-family: Arial, sans-serif;
-    width: 300px;
+    font-family: 'Roboto', sans-serif;
+    width: 300px;    /* Set a width suitable for the popup */
+    height: auto;    /* Automatically adjust height based on content */
+    margin: 0;
     padding: 10px;
+    background-color: #f5f5f5;
+    overflow: hidden; /* Prevent scrolling of the entire popup */
 }
 
 #task-manager {
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#task-form {
+    display: flex;
     gap: 10px;
 }
 
+#task-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
 #task-list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
@@ -19,5 +53,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 5px 0;
+    padding: 8px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
