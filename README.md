@@ -1,7 +1,7 @@
 
-# Task Manager Chrome Extension
+#  ![Logo](/icons/icon2.png)      Task Manager Chrome Extension   
 
-![Logo](path/to/your/logo.png)  <!-- Replace with the path to your logo image -->
+
 
 ## Overview
 This is a simple and efficient task manager Chrome extension designed to help you stay organized. It allows you to add, mark, and remove tasks, with all data stored locally in Chrome's storage.
