@@ -1,3 +1,4 @@
+/* Base styling */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -10,11 +11,10 @@ body {
     width: 100%;
 }
 
+/* Container for task manager */
 #task-manager {
-    width: 100%;
-    max-width: 400px;  /* Max width of 400px */
-    height: 100%;
-    max-height: 600px;  /* Max height of 600px */
+    width: 300px;          /* Fixed width */
+    height: 400px;         /* Fixed height */
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -22,19 +22,24 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    overflow-y: auto;      /* Make the content scrollable if needed */
 }
 
+/* Title styling */
 h2 {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
+    color: #333;
 }
 
+/* Styling for the form */
 #task-form {
     display: flex;
     gap: 10px;
 }
 
+/* Input field */
 #task-input {
     flex: 1;
     padding: 8px;
@@ -42,6 +47,7 @@ h2 {
     border-radius: 5px;
 }
 
+/* Button styling */
 button {
     background-color: #4CAF50;
     color: white;
@@ -55,9 +61,56 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Task list styling */
 #task-list {
     list-style: none;
     padding: 0;
-    max-height: 300px;
-    overflow-y: auto;  /* Makes task list scrollable */
+    max-height: 250px; /* Max height for the task list */
+    overflow-y: auto;  /* Scrollable task list */
+}
+
+/* Task item styling */
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.task-item .checkmark {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #4CAF50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.task-item .checkmark.checked {
+    background-color: #4CAF50;
+}
+
+.task-item .checkmark.checked::before {
+    content: '✓';
+    color: white;
+    font-weight: bold;
+}
+
+.task-item button {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
 }
