@@ -1,7 +1,142 @@
-/* Add some padding and margin for the links */
-.task-item .links {
-    margin-top: 10px;
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    width: 320px;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.5em;
+    text-align: center;
+    color: #4a90e2;
+    margin-bottom: 15px;
+}
+
+#task-manager {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Task form */
+#task-form {
+    display: flex;
+    gap: 10px;
+}
+
+#task-input {
+    flex: 1;
+    padding: 10px;
     font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#task-form button {
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#task-form button:hover {
+    background-color: #4078c0;
+}
+
+/* Task list */
+#task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Task item styling */
+.task-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+}
+
+.task-item.completed {
+    background-color: #e0f7e0;
+}
+
+.task-item .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    color: #333;
+}
+
+.task-item .checkmark {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #4a90e2;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.task-item .checkmark.checked {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.task-item .checkmark.checked::before {
+    content: '✓';
+    font-weight: bold;
+}
+
+/* Expand/collapse button */
+.task-item .toggle-links-btn {
+    background: none;
+    border: none;
+    color: #4a90e2;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.task-item .toggle-links-btn:hover {
+    color: #4078c0;
+}
+
+/* Link section styling */
+.task-item .links {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #555;
+    display: none; /* Initially hidden */
+}
+
+.task-item .links.expanded {
+    display: block; /* Show when expanded */
 }
 
 .task-item .link {
@@ -11,14 +146,41 @@
     margin-bottom: 5px;
 }
 
+.task-item .link a {
+    color: #4a90e2;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.task-item .link a:hover {
+    color: #4078c0;
+}
+
 .task-item .link button {
     background-color: #ff6347;
     color: white;
     border: none;
+    padding: 5px 8px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .task-item .link button:hover {
     background-color: #e5533e;
+}
+
+/* Delete button */
+.task-item button.delete-task-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.task-item button.delete-task-btn:hover {
+    background-color: #d94444;
 }

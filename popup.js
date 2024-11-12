@@ -24,15 +24,7 @@ taskForm.addEventListener('submit', function(event) {
     }
 });
 
-// Load tasks from local storage and display only valid tasks
-function loadTasks() {
-    console.log("Loading tasks from storage...");
-    chrome.storage.local.get({ tasks: [] }, function(result) {
-        const tasks = result.tasks.filter(task => validateTask(task)); // Filter valid tasks only
-        console.log("Filtered tasks loaded from storage:", tasks); // Debug: Check loaded tasks
-        tasks.forEach(task => addTask(task)); // Display each task in the UI
-    });
-}
+
 
 // Validate that a task has the required structure
 function validateTask(task) {
@@ -41,17 +33,16 @@ function validateTask(task) {
 
 // Add a task to the UI
 function addTask(task) {
-    if (!validateTask(task)) {
-        console.warn("Invalid task data, skipping:", task);
-        return; // Skip adding invalid tasks
-    }
-
-    console.log("Adding task to UI:", task); // Debug: Show task being added
     const li = document.createElement('li');
     li.className = 'task-item';
     li.dataset.id = task.id;
 
+    // Ensure 'linksExpanded' exists for each task
+    task.linksExpanded = task.linksExpanded || false; // Default to false if undefined
     if (task.done) li.classList.add('completed');
+
+    const taskHeader = document.createElement('div');
+    taskHeader.className = 'task-header';
 
     const label = document.createElement('label');
     const checkmark = document.createElement('span');
@@ -67,6 +58,17 @@ function addTask(task) {
     const text = document.createElement('span');
     text.textContent = task.text;
 
+    const toggleLinksBtn = document.createElement('button');
+    toggleLinksBtn.className = 'toggle-links-btn';
+    toggleLinksBtn.textContent = task.linksExpanded ? 'Hide Links' : 'Show Links'; // Set button text based on task's state
+    toggleLinksBtn.addEventListener('click', function() {
+        task.linksExpanded = !task.linksExpanded; // Toggle the expanded state in task
+        toggleLinksBtn.textContent = task.linksExpanded ? 'Hide Links' : 'Show Links';
+        const linksContainer = li.querySelector('.links');
+        linksContainer.classList.toggle('expanded', task.linksExpanded); // Toggle visibility
+        saveTask(task); // Save the updated state to local storage
+    });
+
     const linkInput = document.createElement('input');
     linkInput.type = 'url';
     linkInput.placeholder = 'Add a related link...';
@@ -80,12 +82,13 @@ function addTask(task) {
             addLinkToTask(li, link, task.links.length - 1);
             saveTask(task); // Save updated task to storage
             linkInput.value = ''; // Clear the link input
+            updateLinksVisibility(task, li); // Ensure the new link follows the visibility rules
         }
     });
 
     const deleteButton = document.createElement('button');
+    deleteButton.className = 'delete-task-btn';
     deleteButton.textContent = 'Delete';
-    deleteButton.style.backgroundColor = '#ff4d4d';
     deleteButton.addEventListener('click', function() {
         removeTask(task); // Remove task from storage
         li.remove();
@@ -93,22 +96,36 @@ function addTask(task) {
 
     label.appendChild(checkmark);
     label.appendChild(text);
-    li.appendChild(label);
-    li.appendChild(linkInput);
-    li.appendChild(linkButton);
-    li.appendChild(deleteButton);
+    taskHeader.appendChild(label);
+    taskHeader.appendChild(linkInput);
+    taskHeader.appendChild(linkButton);
+    taskHeader.appendChild(toggleLinksBtn);
+    taskHeader.appendChild(deleteButton);
+    li.appendChild(taskHeader);
 
+    // Link section
     const linksContainer = document.createElement('div');
     linksContainer.className = 'links';
-    li.appendChild(linksContainer);
-
     task.links.forEach((link, index) => {
         addLinkToTask(linksContainer, link, index);
     });
+    li.appendChild(linksContainer);
+
+    // Apply the links visibility based on the 'expanded' class
+    linksContainer.classList.toggle('expanded', task.linksExpanded);
 
     taskList.appendChild(li);
 }
 
+// Ensures visibility of links is updated based on task state
+function updateLinksVisibility(task, li) {
+    const linksContainer = li.querySelector('.links');
+    if (task.linksExpanded) {
+        linksContainer.classList.add('expanded');
+    } else {
+        linksContainer.classList.remove('expanded');
+    }
+}
 // Save task to local storage only if valid
 function saveTask(newTask) {
     if (!validateTask(newTask)) {
@@ -135,6 +152,15 @@ function saveTask(newTask) {
                 console.log("Task saved successfully:", tasks); // Debug: Log tasks saved to storage
             }
         });
+    });
+}
+// Load tasks from local storage and display only valid tasks
+function loadTasks() {
+    console.log("Loading tasks from storage...");
+    chrome.storage.local.get({ tasks: [] }, function(result) {
+        const tasks = result.tasks.filter(task => validateTask(task)); // Filter valid tasks only
+        console.log("Filtered tasks loaded from storage:", tasks); // Debug: Check loaded tasks
+        tasks.forEach(task => addTask(task)); // Display each task in the UI
     });
 }
 
