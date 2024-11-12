@@ -28,6 +28,7 @@ taskForm.addEventListener('submit', function(event) {
 
 // Validate that a task has the required structure
 function validateTask(task) {
+
     return task && typeof task.text === 'string' && typeof task.done === 'boolean' && typeof task.id === 'string';
 }
 
@@ -159,7 +160,8 @@ function loadTasks() {
     console.log("Loading tasks from storage...");
     chrome.storage.local.get({ tasks: [] }, function(result) {
         const tasks = result.tasks.filter(task => validateTask(task)); // Filter valid tasks only
-        console.log("Filtered tasks loaded from storage:", tasks); // Debug: Check loaded tasks
+        console.log("Filtered tasks loaded from storage:", tasks);
+        chrome.storage.local.set({tasks: tasks});// Debug: Check loaded tasks
         tasks.forEach(task => addTask(task)); // Display each task in the UI
     });
 }
@@ -177,8 +179,11 @@ function updateTask(task) {
 function removeTask(task) {
     console.log("Removing task from storage:", task); // Debug: Show task being removed
     chrome.storage.local.get({ tasks: [] }, function(result) {
+        // console.log("before remove we have", result.tasks.length)
         const tasks = result.tasks.filter(t => t.id !== task.id); // Filter out task by ID
         chrome.storage.local.set({ tasks: tasks });
+        // console.log("after remove we have", tasks.length)
+
     });
 }
 
@@ -209,11 +214,18 @@ function addLinkToTask(container, link, index) {
 function removeLink(index) {
     chrome.storage.local.get({ tasks: [] }, function(result) {
         const tasks = result.tasks;
-        tasks.forEach(task => {
-            if (task.links[index]) {
-                task.links.splice(index, 1); // Remove the link from task
-            }
-        });
-        chrome.storage.local.set({ tasks });
+
+        // Find the task containing the link using its index
+        const task = tasks.find(task => task.links[index] !== undefined);
+        if (task) {
+            console.log(task)
+
+            // Remove the link at the specified index from the task
+            task.links.splice(index, 1);
+
+            // Save the updated tasks to local storage
+            chrome.storage.local.set({ tasks :tasks});
+        }
     });
 }
+
